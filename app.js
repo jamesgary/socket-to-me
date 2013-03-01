@@ -63,11 +63,14 @@ $(function() {
       ws = new WebSocket("ws://" + $server.val() + "?pong=" + escape($downstream.val()));
       ws.onopen = function() {
         recordedTimes = [];
+        startTimer();
         sendMsg();
       }
       ws.onmessage = function(msg) {
         endTimer();
         compileResults();
+        startTimer();
+        sendMsg();
       }
       break;
     case 'firehose':
@@ -102,7 +105,6 @@ $(function() {
   }
 
   function sendMsg() {
-    startTimer();
     ws.send($upstream);
   }
 
