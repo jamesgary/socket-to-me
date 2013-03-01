@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+  <title>Websocket Tester</title>
+  <style>.firehose { display: none; }</style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span4">
+        <h2>Setup</h2>
+        <div class="btn-group behaviors">
+          <button class="btn active" id="pingpong">PingPong</button>
+          <button class="btn" id="firehose">Firehose</button>
+        </div>
+        <hr />
+        <p class="pingpong">
+            A <b>PingPong</b> server opens a websocket connection, storing the handshake parameter <code>pong</code> ("Downstream message"). Upon receiving any message, it will send a message with the value of the original <code>pong</code> parameter.
+        </p>
+        <p class="firehose">
+          A <b>Firehose</b> server opens a websocket connection, storing the handshake parameter <code>fps</code> ("Frames per second") and <code>response</code> (sent as "Downstream message"). For <code>fps</code> per second, it will send a message with the value of the original <code>response</code> parameter. It ignores all incoming messages.
+        </p>
+        <hr />
+        <form>
+          <fieldset>
+            <label>Server:</label>
+            <div class="input-prepend">
+              <span class="add-on">ws://</span>
+              <input class="input-xlarge" id="server" type="text" placeholder="example.com">
+            </div>
+
+            <div class="firehose">
+              <label>Frames per second:</label>
+              <input class="small" id="fps" type="text" placeholder="2">
+            </div>
+
+            <div class="pingpong">
+              <label>Upstream message:</label>
+              <textarea class="input-block-level" id="upstream">Greetings from the client!</textarea>
+            </div>
+            <label>Downstream message:</label>
+            <textarea class="input-block-level" id="downstream">Greetings from the server!</textarea>
+            <button class="btn btn-large btn-block btn-primary" type="button" id="run">Run for 5 seconds</button>
+            <p class="text-center"> - or control manually -</p>
+            <button class="btn btn-large btn-block btn-success" type="button" id="start-stop">Start / Stop</button>
+          </fieldset>
+        </form>
+      </div>
+      <div class="span5">
+        <h2>Results</h2>
+        <div class="row">
+          <table class="table table-striped span4">
+            <tr>
+              <td>
+                <span class="pingpong">Round Trips</span>
+                <span class="firehose">Messages Received</span>
+              </td>
+              <td id="count">?</td>
+            </tr><tr>
+              <td>
+                <span class="pingpong">Average time</span>
+                <span class="firehose">Average delay</span>
+              </td>
+              <td id="average">?</td>
+            </tr><tr>
+              <td>Std. Dev</td>
+              <td id="std-dev">?</td>
+            </tr><tr>
+              <td>Top 10% Average</td>
+              <td id="top-10">?</td>
+            </tr><tr>
+              <td>Top 1% Average</td>
+              <td id="top-1">?</td>
+            </tr><tr>
+              <td>Max</td>
+              <td id="max">?</td>
+            </tr>
+          </table>
+        </div>
+        <canvas id="chart" width="400" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+  <script src="//raw.github.com/joewalnes/smoothie/master/smoothie.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
